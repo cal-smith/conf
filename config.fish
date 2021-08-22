@@ -10,20 +10,21 @@ alias gs="git status"
 alias gb="git branch"
 alias gc="git checkout"
 
-set -x ANDROID_HOME /Users/cal/Library/Android/sdk
-set -x ANDROID_SDK_ROOT /Users/cal/Library/Android/sdk
+# ubuntu defaults python to python3
+if test (uname) = "Linux"
+    alias python="python3"
+end
 
-set -x NVM_DIR "/Users/cal/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] ; . "$NVM_DIR/nvm.sh"  # This loads nvm
-#. "$NVM_DIR/nvm.sh"
+# weird MacOS env
+if test (uname) != "Linux"
+    set -x ANDROID_HOME /Users/cal/Library/Android/sdk
+    set -x ANDROID_SDK_ROOT /Users/cal/Library/Android/sdk
 
-set -x PATH $PATH /Applications/Rakudo/bin /Applications/Rakudo/share/perl6/site/bin
-set -x PATH $PATH /Users/cal/sites/flutter/bin
+    set -x PATH $PATH /Applications/Rakudo/bin /Applications/Rakudo/share/perl6/site/bin
+    set -x PATH $PATH /Users/cal/sites/flutter/bin
+end
 
-# opam configuration
-# source /Users/cal/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
+set -x NVM_DIR ~/cal/.nvm
 
-# opam configuration
-# source /Users/cal/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
-
-set -x PATH $PATH /Users/cal/.cargo/bin
+set -x PATH $PATH $HOME/.cargo/bin
+fnm env | source
