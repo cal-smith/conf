@@ -25,6 +25,7 @@ if test (uname) != "Linux"
 
     set -x PATH $PATH /Applications/Rakudo/bin /Applications/Rakudo/share/perl6/site/bin
     set -x PATH $PATH /Users/cal/sites/flutter/bin
+    set -x PATH $PATH /opt/homebrew/bin
 end
 
 set -x NVM_DIR ~/cal/.nvm
@@ -32,14 +33,8 @@ set -x NVM_DIR ~/cal/.nvm
 set -x PATH $PATH $HOME/.cargo/bin
 fnm env | source
 
-# stripe conf
 source (rbenv init -|psub)
-# source (nodenv init -|psub)
-source ~/stripe/space-commander/bin/sc-env-activate.fish
+eval (/opt/homebrew/bin/brew shellenv)
 
-set PATH $HOME/stripe/space-commander/bin $PATH
-set PATH $HOME/stripe/password-vault/bin $PATH
-set PATH $HOME/stripe/henson/bin $PATH
 set PATH $HOME/.rbenvs/shims $PATH
 set PATH $HOME/.rbenvs/bin $PATH
-alias stripe-preview=/Users/$USER/stripe/stripe-preview/stripe-preview
