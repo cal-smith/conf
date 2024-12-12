@@ -100,8 +100,38 @@ alias kgn='kubectl get nodes -ocustom-columns="NAME:.metadata.name,TYPE:.metadat
 alias g="git"
 alias gaa="git add ."
 alias gcm="git commit -m"
+function gcmnv() {
+    git commit -m "$1" --no-verify
+}
+alias gcam="g commit --amend"
+alias gcamnv="g commit --amend --no-verify"
 alias gac="git add . ; git commit -m"
 alias gp="git push"
+alias gpnv="gp --no-verify"
+function gu() {
+    local flag_force flag_quiet
+    zmodload zsh/zutil
+    zparseopts -D -F -K -E -- \
+        {q,-quiet}=flag_quiet \
+        {f,-force}=flag_force ||
+        return 1
+    gaa
+    if [[ "$1" != "" ]]; then
+        gcmnv "$1"
+    else
+        if (( $#flag_quiet )); then
+            g commit --amend --no-verify --no-edit
+        else
+            g commit --amend --no-verify
+        fi
+    fi
+    if (( $#flag_force )); then
+        gpnv --force
+    else
+        gpnv
+    fi
+}
+alias guf="gu --force"
 alias gpl="git pull"
 alias gs="git status"
 alias gb="git branch"
@@ -150,6 +180,7 @@ fi
 # [ -f "/Users/cal/.ghcup/env" ] && . "/Users/cal/.ghcup/env" # ghcup-env
 
 # opam configuration
+alias gpnv="gp --no-verify"
 # [[ ! -r /Users/cal/.opam/opam-init/init.zsh ]] || source /Users/cal/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
